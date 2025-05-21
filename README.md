@@ -69,6 +69,4 @@ The project is organized into the following steps (cells in the notebook):
 - This is a basic model. For better performance, consider using **CNNs (Convolutional Neural Networks)**.
 - Logistic Regression may not perform well if images are noisy, low-contrast, or poorly written.
 
-## Author
 
-This project was developed as part of a formative assessment. All code and descriptions are written originally by the student, assisted by understanding concepts through experimentation and research.
