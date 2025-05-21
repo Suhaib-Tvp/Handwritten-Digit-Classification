@@ -2,11 +2,11 @@
 
 This project builds a **multi-class image classification system** to recognize handwritten digits using **Logistic Regression** trained on the MNIST dataset. The model predicts digits (0–9) based on image input.
 
-## 📌 Project Objective
+##  Project Objective
 
 Develop a machine learning model that can classify handwritten digit images (multi-class classification). You can upload your own digit images, and the model will predict the correct digit.
 
-## 🔧 Technologies Used
+##  Technologies Used
 
 - Python
 - Scikit-learn
@@ -14,8 +14,8 @@ Develop a machine learning model that can classify handwritten digit images (mul
 - NumPy
 - Matplotlib
 - Jupyter Notebook / Google Colab
-
-## 📂 Project Structure
+  
+## Project Structure
 
 The project is organized into the following steps (cells in the notebook):
 
@@ -43,14 +43,14 @@ The project is organized into the following steps (cells in the notebook):
 7. **Make Predictions**  
    Use the trained model to predict the digit in your uploaded image.
 
-## 🖼️ Custom Image Requirements
+##  Custom Image Requirements
 
 - Upload a **clear black digit on a white background**
 - Format: `.png` or `.jpg`
 - The digit should be **centered** and **not too small**
 - Images are automatically resized to 28×28
 
-## ▶️ How to Run
+##  How to Run
 
 1. Clone or download the project
 2. Open the notebook in **Jupyter** or **Google Colab**
@@ -58,17 +58,17 @@ The project is organized into the following steps (cells in the notebook):
 4. Upload your own digit image in the correct cell
 5. Check the predicted result printed below the image
 
-## 📈 Model Used
+##  Model Used
 
 - **Logistic Regression** with `multi_class='ovr'`
 - Trained on ~60,000 MNIST images
 - Uses feature scaling (`StandardScaler`) for better convergence
 
-## ⚠️ Notes
+## Notes
 
 - This is a basic model. For better performance, consider using **CNNs (Convolutional Neural Networks)**.
 - Logistic Regression may not perform well if images are noisy, low-contrast, or poorly written.
 
-## 🙋 Author
+## Author
 
 This project was developed as part of a formative assessment. All code and descriptions are written originally by the student, assisted by understanding concepts through experimentation and research.
