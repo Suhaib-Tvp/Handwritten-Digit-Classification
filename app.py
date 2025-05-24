@@ -1,39 +1,20 @@
 import streamlit as st
 from streamlit_drawable_canvas import st_canvas
 from PIL import Image
-from utils import (
-    load_logistic_model, load_cnn_model,
-    preprocess_image_for_logistic, preprocess_image_for_cnn,
-    predict_logistic, predict_cnn
-)
+from utils import load_logistic_model, preprocess_image_for_logistic, predict_logistic
 
 st.set_page_config(page_title="Handwritten Digit Recognition", layout="centered")
-st.title("Handwritten Digit Recognition")
-
-# Model selection
-model_type = st.selectbox("Choose model:", ("Logistic Regression (.pkl)", "CNN (.h5)"))
+st.title("Handwritten Digit Recognition (Logistic Regression)")
 
 # Load model
-if model_type == "Logistic Regression (.pkl)":
-    model, scaler = load_logistic_model(model_path="model.pkl", scaler_path=None)
-else:
-    try:
-        model = load_cnn_model(model_path="cnn_model.h5")
-        scaler = None
-    except ImportError as e:
-        st.error(str(e))
-        st.stop()
+model, scaler = load_logistic_model(model_path="model.pkl", scaler_path=None)
 
 # Input method
 option = st.radio("Input method:", ('Upload an image', 'Draw a digit'))
 
 def display_prediction(img):
-    if model_type == "Logistic Regression (.pkl)":
-        processed = preprocess_image_for_logistic(img, scaler)
-        digit, confidence = predict_logistic(model, processed)
-    else:
-        processed = preprocess_image_for_cnn(img)
-        digit, confidence = predict_cnn(model, processed)
+    processed = preprocess_image_for_logistic(img, scaler)
+    digit, confidence = predict_logistic(model, processed)
     st.success(f"Predicted Digit: {digit} (Confidence: {confidence:.2f})")
 
 if option == 'Upload an image':
