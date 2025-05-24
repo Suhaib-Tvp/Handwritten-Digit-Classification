@@ -4,7 +4,7 @@ from PIL import Image
 from utils import load_logistic_model, preprocess_image_for_logistic, predict_logistic
 
 st.set_page_config(page_title="Handwritten Digit Recognition", layout="centered")
-st.title("Handwritten Digit Recognition (Logistic Regression)")
+st.title("Handwritten Digit Recognition (Logistic Regression Only)")
 
 # Load model
 model, scaler = load_logistic_model(model_path="model.pkl", scaler_path=None)
