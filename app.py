@@ -1,19 +1,30 @@
 import streamlit as st
 from streamlit_drawable_canvas import st_canvas
 from PIL import Image
-import numpy as np
-from utils import load_model, preprocess_image, predict_digit
+from utils import (
+    load_logistic_model, load_cnn_model,
+    preprocess_image_for_logistic, preprocess_image_for_cnn,
+    predict_logistic, predict_cnn
+)
 
 st.title("Handwritten Digit Recognition")
 
-# Load model (change path to your model file if needed)
-model = load_model('model.pkl')
+model_type = st.selectbox("Choose model:", ("Logistic Regression", "CNN"))
+
+if model_type == "Logistic Regression":
+    model, scaler = load_logistic_model()
+else:
+    model = load_cnn_model()
 
 option = st.radio("Choose input method:", ('Upload an image', 'Draw a digit'))
 
 def display_prediction(img):
-    processed = preprocess_image(img)
-    digit, confidence = predict_digit(model, processed)
+    if model_type == "Logistic Regression":
+        processed = preprocess_image_for_logistic(img, scaler)
+        digit, confidence = predict_logistic(model, processed)
+    else:
+        processed = preprocess_image_for_cnn(img)
+        digit, confidence = predict_cnn(model, processed)
     st.success(f"Predicted Digit: {digit} (Confidence: {confidence:.2f})")
 
 if option == 'Upload an image':
@@ -23,7 +34,6 @@ if option == 'Upload an image':
         st.image(img, caption="Uploaded Image", use_column_width=True)
         if st.button("Predict"):
             display_prediction(img)
-
 else:
     st.write("Draw a digit below (black on white):")
     canvas = st_canvas(
