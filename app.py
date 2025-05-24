@@ -8,7 +8,7 @@ from PIL import Image
 
 # Load model and scaler
 model = joblib.load("mnist_model.pkl")
-
+scaler = joblib.load("scaler.pkl")
 
 st.title("Handwritten Digit Recognition")
 st.write("Upload an image of a handwritten digit (0-9).")
