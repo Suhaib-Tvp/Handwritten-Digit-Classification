@@ -8,7 +8,7 @@ import joblib
 model = joblib.load("mnist_model.pkl")
 scaler = joblib.load("scaler.pkl")
 
-# Preprocessing function (no utils.py needed)
+# Preprocessing function
 def preprocess_image(image):
     # Convert to grayscale
     image = image.convert('L')
@@ -32,7 +32,7 @@ uploaded_file = st.file_uploader("Choose a digit image...", type=["png", "jpg", 
 
 if uploaded_file is not None:
     image = Image.open(uploaded_file)
-    st.image(image, caption="Uploaded Image", use_column_width=True)
+    st.image(image, caption="Uploaded Image", use_container_width=True)
 
     processed = preprocess_image(image)
     prediction = model.predict(processed)[0]
