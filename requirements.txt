@@ -4,3 +4,4 @@ numpy
 Pillow
 scikit-learn
 joblib
+tensorflow
