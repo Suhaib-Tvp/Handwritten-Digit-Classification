@@ -1,11 +1,8 @@
-# app.py
-
 import streamlit as st
 import numpy as np
 from PIL import Image, ImageOps
 from streamlit_drawable_canvas import st_canvas
-import joblib
-from utils import preprocess_image, predict_digit
+from utils import preprocess_image, load_model, predict_digit
 
 st.set_page_config(page_title="Handwritten Digit Detection", page_icon="✍️")
 st.title("Handwritten Digit Detection")
@@ -24,11 +21,6 @@ canvas_result = st_canvas(
 
 st.subheader("Or upload a 28x28 grayscale image:")
 uploaded_file = st.file_uploader("Upload an image", type=["png", "jpg", "jpeg"])
-
-# Load model
-@st.cache_resource
-def load_model():
-    return joblib.load("mnist_logreg.pkl")
 
 model = load_model()
 
