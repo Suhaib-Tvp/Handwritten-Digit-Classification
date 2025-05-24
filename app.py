@@ -1,24 +1,26 @@
 import streamlit as st
+import numpy as np
 from PIL import Image
 import joblib
 import matplotlib.pyplot as plt
-from utils import preprocess_image
+from utils import preprocess_image, predict_digit
 
-# Load model
+# Load trained model
 model = joblib.load("mnist_model.pkl")
 
-# Title
-st.title("🧠 MNIST Digit Classifier")
-st.write("Upload an image of a digit (28x28 or larger), and I'll try to guess it!")
+st.title("🖊️ Handwritten Digit Recognizer")
+st.write("Upload an image of a handwritten digit (28x28 grayscale). The model will predict the digit.")
 
-# File uploader
-uploaded_file = st.file_uploader("Choose a digit image...", type=["png", "jpg", "jpeg"])
+uploaded_file = st.file_uploader("Choose an image...", type=["png", "jpg", "jpeg"])
 
-if uploaded_file is not None:
-    image = Image.open(uploaded_file)
+if uploaded_file:
+    image = Image.open(uploaded_file).convert("L")
     st.image(image, caption="Uploaded Image", use_column_width=True)
+    
+    with open("temp_image.png", "wb") as f:
+        f.write(uploaded_file.read())
 
-    processed = preprocess_image(image)
-    prediction = model.predict(processed)[0]
+    processed = preprocess_image("temp_image.png")
+    prediction = predict_digit(processed, model)
 
-    st.success(f"✅ Predicted Digit: **{prediction}**")
+    st.subheader(f"🔢 Predicted Digit: {prediction}")
