@@ -1,7 +1,0 @@
-streamlit
-scikit-learn
-matplotlib
-numpy
-pillow
-opencv-python
-joblib
