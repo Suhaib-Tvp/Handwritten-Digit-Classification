@@ -7,19 +7,28 @@ from utils import (
     predict_logistic, predict_cnn
 )
 
+st.set_page_config(page_title="Handwritten Digit Recognition", layout="centered")
 st.title("Handwritten Digit Recognition")
 
-model_type = st.selectbox("Choose model:", ("Logistic Regression", "CNN"))
+# Model selection
+model_type = st.selectbox("Choose model:", ("Logistic Regression (.pkl)", "CNN (.h5)"))
 
-if model_type == "Logistic Regression":
-    model, scaler = load_logistic_model()
+# Load model
+if model_type == "Logistic Regression (.pkl)":
+    model, scaler = load_logistic_model(model_path="model.pkl", scaler_path=None)
 else:
-    model = load_cnn_model()
+    try:
+        model = load_cnn_model(model_path="cnn_model.h5")
+        scaler = None
+    except ImportError as e:
+        st.error(str(e))
+        st.stop()
 
-option = st.radio("Choose input method:", ('Upload an image', 'Draw a digit'))
+# Input method
+option = st.radio("Input method:", ('Upload an image', 'Draw a digit'))
 
 def display_prediction(img):
-    if model_type == "Logistic Regression":
+    if model_type == "Logistic Regression (.pkl)":
         processed = preprocess_image_for_logistic(img, scaler)
         digit, confidence = predict_logistic(model, processed)
     else:
@@ -28,7 +37,7 @@ def display_prediction(img):
     st.success(f"Predicted Digit: {digit} (Confidence: {confidence:.2f})")
 
 if option == 'Upload an image':
-    uploaded = st.file_uploader("Upload a digit image...", type=["png", "jpg", "jpeg"])
+    uploaded = st.file_uploader("Upload a digit image (28x28, black digit on white)...", type=["png", "jpg", "jpeg"])
     if uploaded:
         img = Image.open(uploaded).convert("L")
         st.image(img, caption="Uploaded Image", use_column_width=True)
