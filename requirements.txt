@@ -1,6 +1,6 @@
 streamlit
-streamlit-drawable-canvas
 numpy
-Pillow
+opencv-python
 scikit-learn
 joblib
+pillow
