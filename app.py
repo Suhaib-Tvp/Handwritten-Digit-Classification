@@ -7,7 +7,6 @@ Original file is located at
     https://colab.research.google.com/drive/1gPm32pSwi1sVlqeqKyJAYUo_gZ91WQoF
 """
 
-!pip install streamlit numpy matplotlib opencv-python joblib
 import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
