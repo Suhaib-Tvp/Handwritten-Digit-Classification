@@ -1,18 +1,16 @@
-
 import numpy as np
-import cv2
+from PIL import Image, ImageOps
 
 def preprocess_image(img):
-    # Convert RGBA to grayscale
-    gray = cv2.cvtColor(img.astype('uint8'), cv2.COLOR_RGBA2GRAY)
-    # Resize to 28x28 and invert colors
-    resized = cv2.resize(gray, (28, 28))
-    inverted = cv2.bitwise_not(resized)
-    # Flatten the image
-    flat = inverted.reshape(1, -1)
-    return flat
+    # Convert to grayscale, resize, invert, binarize, flatten
+    img = img.convert('L').resize((28, 28), Image.Resampling.LANCZOS)
+    img = ImageOps.invert(img)
+    img = np.array(img)
+    img = (img > 127).astype(np.float32)
+    img = img.reshape(1, -1)
+    return img
 
-def predict_digit(image, model, scaler):
-    image_scaled = scaler.transform(image)
-    prediction = model.predict(image_scaled)
-    return prediction[0]
+def predict_digit(model, processed_img):
+    probs = model.predict_proba(processed_img)[0]
+    pred = np.argmax(probs)
+    return pred, probs
